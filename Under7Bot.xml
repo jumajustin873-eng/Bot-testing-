@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml xmlns="https://developers.google.com/blockly/xml" is_dbot="true" collection="false">
+  <variables>
+    <variable id="aD0I2PPK3p_}A@z(vb0P">STAKE</variable>
+    <variable id="=RZ25D}(}1+x^lQYjm6x">INITIAL STAKE</variable>
+    <variable id="fCxrNtvK86,pspiRZF?H">STOP LOSS</variable>
+    <variable id="NDjP(.1O#Q;|,|Ri0qmI">TAKE PROFIT</variable>
+    <variable id="F9Hixb-C#0?IY2W5a`)g">MARTIGALE</variable>
+    <variable id="2[7kM5JUtnNSKd/DZyNU">prediction</variable>
+    <variable id="DIGIT_1">DIGIT_1</variable>
+    <variable id="DIGIT_2">DIGIT_2</variable>
+    <variable id="DIGIT_3">DIGIT_3</variable>
+    <variable id="DIGIT_4">DIGIT_4</variable>
+    <variable id="DIGIT_5">DIGIT_5</variable>
+    <variable id="text">text</variable>
+  </variables>
+
+  <block type="trade_definition" id="vX#h+;e~!d-ecvc_9ix*" deletable="false" x="0" y="0">
+    <statement name="TRADE_OPTIONS">
+      <block type="trade_definition_market" id=")8@Q0Oz74@Id^2]pdp}+" deletable="false" movable="false">
+        <field name="MARKET_LIST">synthetic_index</field>
+        <field name="SUBMARKET_LIST">random_index</field>
+        <field name="SYMBOL_LIST">1HZ10V</field>
+        <next>
+          <block type="trade_definition_tradetype" id="dT$[CT/fEB-hte6iXKlP" deletable="false" movable="false">
+            <field name="TRADETYPECAT_LIST">digits</field>
+            <field name="TRADETYPE_LIST">overunder</field>
+            <next>
+              <block type="trade_definition_contracttype" id="Ou#-i){=J,^|zX,.E0#[" deletable="false" movable="false">
+                <field name="TYPE_LIST">DIGITUNDER</field>
+                <next>
+                  <block type="trade_definition_candleinterval" id="LP7?Irva%eEp7s+_/~g8" deletable="false" movable="false">
+                    <field name="CANDLEINTERVAL_LIST">60</field>
+                    <next>
+                      <block type="trade_definition_restartbuysell" id="_@Iv=uV,:FO})`~w#dk=" deletable="false" movable="false">
+                        <field name="TIME_MACHINE_ENABLED">FALSE</field>
+                        <next>
+                          <block type="trade_definition_restartonerror" id="2O4Y`Rv^0l^g4cfk;G-U" deletable="false" movable="false">
+                            <field name="RESTARTONERROR">TRUE</field>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+
+    <statement name="INITIALIZATION">
+      <block type="variables_set">
+        <field name="VAR">STAKE</field>
+        <value><block type="math_number"><field name="NUM">4.97</field></block></value>
+        <next>
+          <block type="variables_set">
+            <field name="VAR">INITIAL STAKE</field>
+            <value><block type="math_number"><field name="NUM">4.97</field></block></value>
+            <next>
+              <block type="variables_set">
+                <field name="VAR">STOP LOSS</field>
+                <value><block type="math_number"><field name="NUM">100</field></block></value>
+                <next>
+                  <block type="variables_set">
+                    <field name="VAR">TAKE PROFIT</field>
+                    <value><block type="math_number"><field name="NUM">50</field></block></value>
+                    <next>
+                      <block type="variables_set">
+                        <field name="VAR">MARTIGALE</field>
+                        <value><block type="math_number"><field name="NUM">2</field></block></value>
+                        <next>
+                          <block type="variables_set">
+                            <field name="VAR">prediction</field>
+                            <value><block type="math_number"><field name="NUM">7</field></block></value>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+
+    <statement name="SUBMARKET">
+      <block type="controls_repeat_ext">
+        <value name="TIMES"><block type="math_constant"><field name="CONSTANT">INFINITY</field></block></value>
+        <statement name="DO">
+          <block type="timeout">
+            <statement name="TIMEOUTSTACK">
+
+              <!-- Grab last 5 digits -->
+              <block type="variables_set">
+                <field name="VAR">DIGIT_1</field>
+                <value>
+                  <block type="lists_getIndex">
+                    <field name="WHERE">FROM_END</field>
+                    <field name="MODE">GET</field>
+                    <value name="VALUE"><block type="lastDigitList"/></value>
+                    <value name="AT"><block type="math_number"><field name="NUM">1</field></block></value>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set">
+                    <field name="VAR">DIGIT_2</field>
+                    <value>
+                      <block type="lists_getIndex">
+                        <field name="WHERE">FROM_END</field>
+                        <field name="MODE">GET</field>
+                        <value name="VALUE"><block type="lastDigitList"/></value>
+                        <value name="AT"><block type="math_number"><field name="NUM">2</field></block></value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set">
+                        <field name="VAR">DIGIT_3</field>
+                        <value>
+                          <block type="lists_getIndex">
+                            <field name="WHERE">FROM_END</field>
+                            <field name="MODE">GET</field>
+                            <value name="VALUE"><block type="lastDigitList"/></value>
+                            <value name="AT"><block type="math_number"><field name="NUM">3</field></block></value>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="variables_set">
+                            <field name="VAR">DIGIT_4</field>
+                            <value>
+                              <block type="lists_getIndex">
+                                <field name="WHERE">FROM_END</field>
+                                <field name="MODE">GET</field>
+                                <value name="VALUE"><block type="lastDigitList"/></value>
+                                <value name="AT"><block type="math_number"><field name="NUM">4</field></block></value>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="variables_set">
+                                <field name="VAR">DIGIT_5</field>
+                                <value>
+                                  <block type="lists_getIndex">
+                                    <field name="WHERE">FROM_END</field>
+                                    <field name="MODE">GET</field>
+                                    <value name="VALUE"><block type="lastDigitList"/></value>
+                                    <value name="AT"><block type="math_number"><field name="NUM">5</field></block></value>
+                                  </block>
+                                </value>
+                                <next>
+
+                                  <!-- Check if all last 5 digits >= 7 -->
+                                  <block type="controls_if">
+                                    <value name="IF0">
+                                      <block type="logic_operation">
+                                        <field name="OP">AND</field>
+                                        <value name="A">
+                                          <block type="logic_operation">
+                                            <field name="OP">AND</field>
+                                            <value name="A">
+                                              <block type="logic_operation">
+                                                <field name="OP">AND</field>
+                                                <value name="A">
+                                                  <block type="logic_compare">
+                                                    <field name="OP">GTE</field>
+                                                    <value name="A"><variables_get><field name="VAR">DIGIT_1</field></variables_get></value>
+                                                    <value name="B"><math_number><field name="NUM">7</field></math_number></value>
+                                                  </block>
+                                                </value>
+                                                <value name="B">
+                                                  <block type="logic_compare">
+                                                    <field name="OP">GTE</field>
+                                                    <value name="A"><variables_get><field name="VAR">DIGIT_2</field></variables_get></value>
+                                                    <value name="B"><math_number><field name="NUM">7</field></math_number></value>
+                                                  </block>
+                                                </value>
+                                              </block>
+                                            </value>
+                                            <value name="B">
+                                              <block type="logic_compare">
+                                                <field name="OP">GTE</field>
+                                                <value name="A"><variables_get><field name="VAR">DIGIT_3</field></variables_get></value>
+                                                <value name="B"><math_number><field name="NUM">7</field></math_number></value>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </value>
+                                        <value name="B">
+                                          <block type="logic_operation">
+                                            <field name="OP">AND</field>
+                                            <value name="A">
+                                              <block type="logic_compare">
+                                                <field name="OP">GTE</field>
+                                                <value name="A"><variables_get><field name="VAR">DIGIT_4</field></variables_get></value>
+                                                <value name="B"><math_number><field name="NUM">7</field></math_number></value>
+                                              </block>
+                                            </value>
+                                            <value name="B">
+                                              <block type="logic_compare">
+                                                <field name="OP">GTE</field>
+                                                <value name="A"><variables_get><field name="VAR">DIGIT_5</field></variables_get></value>
+                                                <value name="B"><math_number><field name="NUM">7</field></math_number></value>
+                                              </block>
+                                            </value>
+                                          </block>
+                                        </value>
+                                      </block>
+                                    </value>
+                                    <statement name="DO0">
+                                      <block type="variables_set">
+                                        <field name="VAR">prediction</field>
+                                        <value><block type="math_number"><field name="NUM">7</field></block></value>
+                                        <next>
+                                          <block type="before_purchase">
+                                            <statement name="BEFOREPURCHASE_STACK">
+                                              <block type="purchase">
+                                                <field name="PURCHASE_LIST">DIGITUNDER</field>
+                                              </block>
+                                            </statement>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </statement>
+                                  </block>
+
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+
+            </statement>
+            <value name="SECONDS"><block type="math_number"><field name="NUM">0</field></block></value>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>
