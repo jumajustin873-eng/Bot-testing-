@@ -1,0 +1,201 @@
+<xml xmlns="https://developers.google.com/blockly/xml" is_dbot="true">
+  <variables>
+    <variable id="stake">stake</variable>
+    <variable id="initial_stake">initial_stake</variable>
+    <variable id="martingale">martingale</variable>
+    <variable id="d1">d1</variable>
+    <variable id="d2">d2</variable>
+    <variable id="d3">d3</variable>
+    <variable id="d4">d4</variable>
+    <variable id="d5">d5</variable>
+  </variables>
+
+  <!-- TRADE DEFINITION -->
+  <block type="trade_definition" deletable="false" x="20" y="20">
+    <statement name="TRADE_OPTIONS">
+      <block type="trade_definition_market">
+        <field name="MARKET_LIST">synthetic_index</field>
+        <field name="SUBMARKET_LIST">random_index</field>
+        <field name="SYMBOL_LIST">1HZ75V</field>
+        <next>
+          <block type="trade_definition_tradetype">
+            <field name="TRADETYPECAT_LIST">digits</field>
+            <field name="TRADETYPE_LIST">overunder</field>
+            <next>
+              <block type="trade_definition_contracttype">
+                <field name="TYPE_LIST">DIGITUNDER</field>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+
+    <!-- INITIALIZATION -->
+    <statement name="INITIALIZATION">
+      <block type="variables_set">
+        <field name="VAR" id="stake">stake</field>
+        <value name="VALUE"><block type="math_number"><field name="NUM">1</field></block></value>
+        <next>
+          <block type="variables_set">
+            <field name="VAR" id="initial_stake">initial_stake</field>
+            <value name="VALUE"><block type="math_number"><field name="NUM">1</field></block></value>
+            <next>
+              <block type="variables_set">
+                <field name="VAR" id="martingale">martingale</field>
+                <value name="VALUE"><block type="math_number"><field name="NUM">2</field></block></value>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+
+    <!-- MAIN LOGIC -->
+    <statement name="SUBMARKET">
+      <block type="controls_repeat_ext">
+        <value name="TIMES">
+          <block type="math_constant"><field name="CONSTANT">INFINITY</field></block>
+        </value>
+        <statement name="DO">
+
+          <!-- READ LAST 5 DIGITS -->
+          <block type="variables_set">
+            <field name="VAR" id="d1">d1</field>
+            <value name="VALUE"><block type="last_digit"/></value>
+            <next>
+              <block type="variables_set">
+                <field name="VAR" id="d2">d2</field>
+                <value name="VALUE">
+                  <block type="lists_getIndex">
+                    <mutation statement="false" at="false"></mutation>
+                    <field name="MODE">GET</field>
+                    <field name="WHERE">FROM_END</field>
+                    <value name="VALUE"><block type="last_digit_list"/></value>
+                    <value name="AT"><block type="math_number"><field name="NUM">2</field></block></value>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set">
+                    <field name="VAR" id="d3">d3</field>
+                    <value name="VALUE">
+                      <block type="lists_getIndex">
+                        <mutation statement="false" at="false"></mutation>
+                        <field name="MODE">GET</field>
+                        <field name="WHERE">FROM_END</field>
+                        <value name="VALUE"><block type="last_digit_list"/></value>
+                        <value name="AT"><block type="math_number"><field name="NUM">3</field></block></value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set">
+                        <field name="VAR" id="d4">d4</field>
+                        <value name="VALUE">
+                          <block type="lists_getIndex">
+                            <mutation statement="false" at="false"></mutation>
+                            <field name="MODE">GET</field>
+                            <field name="WHERE">FROM_END</field>
+                            <value name="VALUE"><block type="last_digit_list"/></value>
+                            <value name="AT"><block type="math_number"><field name="NUM">4</field></block></value>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="variables_set">
+                            <field name="VAR" id="d5">d5</field>
+                            <value name="VALUE">
+                              <block type="lists_getIndex">
+                                <mutation statement="false" at="false"></mutation>
+                                <field name="MODE">GET</field>
+                                <field name="WHERE">FROM_END</field>
+                                <value name="VALUE"><block type="last_digit_list"/></value>
+                                <value name="AT"><block type="math_number"><field name="NUM">5</field></block></value>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+
+          <!-- CONDITION -->
+          <next>
+            <block type="controls_if">
+              <value name="IF0">
+                <block type="logic_operation">
+                  <field name="OP">AND</field>
+                  <value name="A">
+                    <block type="logic_compare"><field name="OP">GTE</field>
+                      <value name="A"><block type="variables_get"><field name="VAR" id="d1"/></block></value>
+                      <value name="B"><block type="math_number"><field name="NUM">7</field></block></value>
+                    </block>
+                  </value>
+                  <value name="B">
+                    <block type="logic_compare"><field name="OP">GTE</field>
+                      <value name="A"><block type="variables_get"><field name="VAR" id="d2"/></block></value>
+                      <value name="B"><block type="math_number"><field name="NUM">7</field></block></value>
+                    </block>
+                  </value>
+                </block>
+              </value>
+              <statement name="DO0">
+                <block type="trade_definition_tradeoptions">
+                  <mutation has_prediction="true"></mutation>
+                  <field name="DURATIONTYPE_LIST">t</field>
+                  <value name="DURATION"><block type="math_number"><field name="NUM">1</field></block></value>
+                  <value name="AMOUNT"><block type="variables_get"><field name="VAR" id="stake"/></block></value>
+                  <value name="PREDICTION"><block type="math_number"><field name="NUM">8</field></block></value>
+                </block>
+              </statement>
+            </block>
+          </next>
+
+        </statement>
+      </block>
+    </statement>
+  </block>
+
+  <!-- BEFORE PURCHASE -->
+  <block type="before_purchase" deletable="false" x="20" y="950">
+    <statement name="BEFOREPURCHASE_STACK">
+      <block type="purchase">
+        <field name="PURCHASE_LIST">DIGITUNDER</field>
+      </block>
+    </statement>
+  </block>
+
+  <!-- AFTER PURCHASE -->
+  <block type="after_purchase" x="520" y="950">
+    <statement name="AFTERPURCHASE_STACK">
+      <block type="controls_if">
+        <value name="IF0">
+          <block type="contract_check_result">
+            <field name="CHECK_RESULT">win</field>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="variables_set">
+            <field name="VAR" id="stake">stake</field>
+            <value name="VALUE"><block type="variables_get"><field name="VAR" id="initial_stake"/></block></value>
+          </block>
+        </statement>
+        <statement name="ELSE">
+          <block type="variables_set">
+            <field name="VAR" id="stake">stake</field>
+            <value name="VALUE">
+              <block type="math_arithmetic">
+                <field name="OP">MULTIPLY</field>
+                <value name="A"><block type="variables_get"><field name="VAR" id="stake"/></block></value>
+                <value name="B"><block type="variables_get"><field name="VAR" id="martingale"/></block></value>
+              </block>
+            </value>
+          </block>
+        </statement>
+        <next><block type="trade_again"/></next>
+      </block>
+    </statement>
+  </block>
+</xml>
