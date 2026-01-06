@@ -1,0 +1,91 @@
+<block type="variables_set" id="reset_counter">
+  <field name="VAR" id="counter_id">count_high</field>
+  <value name="VALUE">
+    <block type="math_number" id="zero">
+      <field name="NUM">0</field>
+    </block>
+  </value>
+  <next>
+    <block type="controls_for" id="loop_5_digits">
+      <field name="VAR" id="iterator_id">i</field>
+      <value name="FROM">
+        <block type="math_number" id="one">
+          <field name="NUM">1</field>
+        </block>
+      </value>
+      <value name="TO">
+        <block type="math_number" id="five">
+          <field name="NUM">5</field>
+        </block>
+      </value>
+      <value name="BY">
+        <block type="math_number" id="one_step">
+          <field name="NUM">1</field>
+        </block>
+      </value>
+      <statement name="DO">
+        <block type="controls_if" id="check_digit">
+          <value name="IF0">
+            <block type="logic_compare" id="compare_gte_7">
+              <field name="OP">GTE</field>
+              <value name="A">
+                <block type="lists_getIndex" id="get_digit">
+                  <mutation statement="false" at="true"></mutation>
+                  <field name="MODE">GET</field>
+                  <field name="WHERE">FROM_END</field>
+                  <value name="VALUE">
+                    <block type="lastDigitList" id="list_source"></block>
+                  </value>
+                  <value name="AT">
+                    <block type="variables_get" id="get_i">
+                      <field name="VAR" id="iterator_id">i</field>
+                    </block>
+                  </value>
+                </block>
+              </value>
+              <value name="B">
+                <block type="math_number" id="num_7">
+                  <field name="NUM">7</field>
+                </block>
+              </value>
+            </block>
+          </value>
+          <statement name="DO0">
+            <block type="math_change" id="increment_counter">
+              <field name="VAR" id="counter_id">count_high</field>
+              <value name="DELTA">
+                <shadow type="math_number" id="inc_1">
+                  <field name="NUM">1</field>
+                </shadow>
+              </value>
+            </block>
+          </statement>
+        </block>
+      </statement>
+      <next>
+        <block type="controls_if" id="final_check">
+          <value name="IF0">
+            <block type="logic_compare" id="compare_equals_5">
+              <field name="OP">EQ</field>
+              <value name="A">
+                <block type="variables_get" id="get_count">
+                  <field name="VAR" id="counter_id">count_high</field>
+                </block>
+              </value>
+              <value name="B">
+                <block type="math_number" id="num_5">
+                  <field name="NUM">5</field>
+                </block>
+              </value>
+            </block>
+          </value>
+          <statement name="DO0">
+            <block type="controls_flow_statements" id="break_loop">
+              <field name="FLOW">BREAK</field>
+            </block>
+          </statement>
+        </block>
+      </next>
+    </block>
+  </next>
+</block>
